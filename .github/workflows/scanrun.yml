@@ -40,7 +40,8 @@ jobs:
           echo "Verifying the CLI"
           mend version
 
-      - script: java -jar wss-unified-agent.jar
+      - name: 'Running the UA'
+        run: java -jar wss-unified-agent.jar
         env: 
           WS_LOG_LEVEL: "DEBUG"
           WS_SHOWPROGRESSBAR: FALSE
@@ -48,14 +49,15 @@ jobs:
           WS_PRODUCTNAME: $Build.Repository.Name
           WS_USERKEY: $WS_USERKEY
           WS_APIKEY: $WS_APIKEY
-        displayName: 'Running the UA'
+        
 
-      - script: mend dep --non-interactive --extended --update --scope "$Build.Repository.Name//$Build.SourceBranchName"
+      - name: "Running the CLI"
+        run: mend dep --non-interactive --extended --update --scope "$Build.Repository.Name//$Build.SourceBranchName"
         env:
           MEND_USER_KEY: $WS_USERKEY
           MEND_EMAIL: $MEND_EMAIL
           MEND_URL: $MEND_URL
           MEND_LOG_LEVEL: "DEBUG"
-        displayName: "Running the CLI"
+        
 
       
