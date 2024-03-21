@@ -40,16 +40,16 @@ jobs:
           echo "Verifying the CLI"
           mend version
 
-      - name: 'Running the UA'
-        run: java -jar wss-unified-agent.jar
-        env: 
-          WS_LOG_LEVEL: "DEBUG"
-          WS_SHOWPROGRESSBAR: FALSE
-          WS_PROJECTNAME: $Build.Repository.Name_$Build.SourceBranchName
-          WS_PRODUCTNAME: $Build.Repository.Name
-          WS_USERKEY: $WS_USERKEY
-          WS_APIKEY: $WS_APIKEY
-          WS_WSS.URL: $MEND_URL
+      # - name: 'Running the UA'
+      #   run: java -jar wss-unified-agent.jar
+      #   env: 
+      #     WS_LOG_LEVEL: "DEBUG"
+      #     WS_SHOWPROGRESSBAR: FALSE
+      #     WS_PROJECTNAME: $Build.Repository.Name_$Build.SourceBranchName
+      #     WS_PRODUCTNAME: $Build.Repository.Name
+      #     WS_USERKEY: $WS_USERKEY
+      #     WS_APIKEY: $WS_APIKEY
+      #     WS_WSS.URL: $MEND_URL
         
 
       - name: "Running the CLI"
