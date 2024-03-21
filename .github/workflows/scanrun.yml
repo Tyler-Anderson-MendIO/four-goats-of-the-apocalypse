@@ -49,7 +49,7 @@ jobs:
           WS_PRODUCTNAME: $Build.Repository.Name
           WS_USERKEY: $WS_USERKEY
           WS_APIKEY: $WS_APIKEY
-          WS_WSSURL: $MEND_URL
+          WS_WSS.URL: $MEND_URL
         
 
       - name: "Running the CLI"
