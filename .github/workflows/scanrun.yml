@@ -49,14 +49,26 @@ jobs:
       #     WS_PRODUCTNAME: $Build.Repository.Name
       #     WS_USERKEY: $WS_USERKEY
       #     WS_APIKEY: $WS_APIKEY
-      #     WS_WSS.URL: $MEND_URL
+      #     WS_WSS_URL: $MEND_URL
         
-      - name: "Building the packages"
+      - name: "Building Nuget"
         run: |
-              echo "Building the packages"
+              echo "Building nuget"
               nuget install
+
+      - name: "Building Maven"
+        run: |
+              echo "Building Maven"
               mvn clean install
+           
+      - name: "Building NPM"
+        run: |
+              echo "Building NPM"
               npm install
+
+      - name: "Building pip"
+        run: |
+              echo "Building pip"
               pip install --requirement requirements.txt
 
       - name: "Running the CLI"
