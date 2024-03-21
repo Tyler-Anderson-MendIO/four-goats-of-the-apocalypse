@@ -57,7 +57,7 @@ jobs:
               nuget install
               mvn clean install
               npm install
-              pip install
+              pip install .
 
       - name: "Running the CLI"
         run: |
