@@ -53,7 +53,7 @@ jobs:
         
 
       - name: "Running the CLI"
-        run: mend dep --non-interactive --extended --update --scope "Tyler_Github_Scans//${{env.GITHUB_REPOSITORY}}"
+        run: mend dep --non-interactive --extended --update --scope "Tyler_Github_Scans//$GITHUB_REPOSITORY"
         env:
           MEND_USER_KEY: ${{ secrets.WS_USERKEY }}
           MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
