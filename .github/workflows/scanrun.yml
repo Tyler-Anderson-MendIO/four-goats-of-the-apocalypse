@@ -51,9 +51,17 @@ jobs:
       #     WS_APIKEY: $WS_APIKEY
       #     WS_WSS.URL: $MEND_URL
         
+      - name: "Building the packages"
+        run: |
+              echo "Building the packages"
+              nuget install
+              mvn clean install
+              npm install
+              pip install
 
       - name: "Running the CLI"
-        run: mend dep --non-interactive --extended --update --scope "Tyler_Github_Scans//${{ github.repository }}"
+        run: |
+              mend dep --non-interactive --extended --update --scope "Tyler_Github_Scans//${{ github.repository }}"
         env:
           MEND_USER_KEY: ${{ secrets.WS_USERKEY }}
           MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
