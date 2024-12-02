@@ -7,7 +7,7 @@ orbs:
 jobs:
   mend_cli_run:
     docker:
-      - image: ubuntu:latest
+      - image: cimg/base:stable
         user: root
     environment:
       MEND_EMAIL: $MEND_EMAIL # Your email address; can be inserted as a CircleCI Project settings environment variable.
