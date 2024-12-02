@@ -47,4 +47,5 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - mend_cli_run
+      - mend_cli_run:
+          context: four-goats-auth
