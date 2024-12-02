@@ -5,48 +5,33 @@ orbs:
   node: circleci/node@5
   python: circleci/python@2
 jobs:
-  test-node:
-    # Install node dependencies and run tests
-    executor: node/default
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          name: Run tests
-          command: npm run test:ci
-  test-java:
+  mend_cli_run:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: cimg/base:stable
+        user: root
+    environment:
+      MEND_EMAIL: $MEND_EMAIL # Your email address; can be inserted as a CircleCI Project settings environment variable.
+      MEND_USER_KEY: $USER_KEY # Your Mend user key; can be inserted as a CircleCI Project settings environment variable.
+      # MEND_ORGANIZATION: $ORG_KEY
+      MEND_URL: "https://app.whitesourcesoftware.com" # Make sure to change this to your Mend or WS instance.
     steps:
-      - checkout
       - run:
-          name: Calculate cache key
-          command: |-
-            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
-                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
-      - restore_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+          name: Print Environment Variables
+          command: |
+            echo "MEND_EMAIL=$API_KEY"
+            echo "MEND_USER_KEY=$USER_KEY"
+            echo "MEND_URL=$MEND_URL"
       - run:
-          command: mvn verify
-      - store_test_results:
-          path: target/surefire-reports
-      - save_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-          paths:
-            - ~/.m2/repository
-  test-python:
-    # Install dependencies and run tests
-    docker:
-      - image: cimg/python:3.8-node
-    steps:
-      - checkout
-      - python/install-packages
+          name: Download Mend CLI
+          command: curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
       - run:
-          name: Run tests
-          command: pytest --junitxml=junit.xml || ((($? == 5)) && echo 'Did not find any tests to run.')
-      - store_test_results:
-          path: junit.xml
+          name: mend auth info check
+          command: mend auth info
+      - run:
+          name: Run Mend CLI SCA Scan
+          command: mend dep -u -s "CircleCITest//test1"
+
+
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
@@ -62,11 +47,4 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - test-node
-      - test-java
-      - test-python
-    # - deploy:
-    #     requires:
-    #       - test-node
-    #       - test-java
-    #       - test-python
+      - mend_cli_run
