@@ -3,14 +3,14 @@
 name: UA/CLI Scan Run
 
 # Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+# on:
+#   # Triggers the workflow on push or pull request events but only for the "main" branch
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
+#   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -40,16 +40,16 @@ jobs:
           echo "Verifying the CLI"
           mend version
 
-      # - name: 'Running the UA'
-      #   run: java -jar wss-unified-agent.jar
-      #   env: 
-      #     WS_LOG_LEVEL: "DEBUG"
-      #     WS_SHOWPROGRESSBAR: FALSE
-      #     WS_PROJECTNAME: $Build.Repository.Name_$Build.SourceBranchName
-      #     WS_PRODUCTNAME: $Build.Repository.Name
-      #     WS_USERKEY: $WS_USERKEY
-      #     WS_APIKEY: $WS_APIKEY
-      #     WS_WSS_URL: $MEND_URL
+      - name: 'Running the UA'
+        run: java -jar wss-unified-agent.jar
+        env: 
+          WS_LOG_LEVEL: "DEBUG"
+          WS_SHOWPROGRESSBAR: FALSE
+          WS_PROJECTNAME: $Build.Repository.Name_$Build.SourceBranchName
+          WS_PRODUCTNAME: $Build.Repository.Name
+          WS_USERKEY: $WS_USERKEY
+          WS_APIKEY: $WS_APIKEY
+          WS_WSS_URL: $MEND_URL
         
       - name: "Building Nuget"
         run: |
