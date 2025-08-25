@@ -3,7 +3,7 @@
         "configMode": "LOCAL",
         "enableLicenseViolations": "true",
         "enableIaC": "true",
-        "baseBranches": ["main", "TestingNewBranches"]
+        "baseBranches": ["main"]
     },
     "scanSettingsSAST": {
         "enableScan": "true",
