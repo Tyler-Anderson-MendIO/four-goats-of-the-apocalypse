@@ -6,7 +6,7 @@
         "baseBranches": ["main", "TestingNewBranch"]
     },
     "scanSettingsSAST": {
-        "enableScan": "false",
+        "enableScan": "true",
         "enableRemediation": "true",
         "ScanPullRequests": "true"
     },
