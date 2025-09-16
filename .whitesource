@@ -3,7 +3,7 @@
         "configMode": "LOCAL",
         "enableLicenseViolations": "true",
         "enableIaC": "true",
-        "projectToken": "fd0dc0ad5e954ed0a2fdc416e6cc92a2721109a02c324afba48010631ec31297"
+        "projectToken": "fd0dc0ad5e954ed0a2fdc416e6cc92a2721109a02c324afba48010631ec31297",
         "baseBranches": []
     },
     "scanSettingsSAST": {
