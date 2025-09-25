@@ -1,11 +1,4 @@
 {
-    "scanSettings": {
-        "configMode": "LOCAL",
-        "enableLicenseViolations": "true",
-        "enableIaC": "true",
-        "projectToken": "",
-        "baseBranches": ["main", "TestingNewBranch"]
-    },
     "scanSettingsSAST": {
         "enableScan": "true",
         "enableRemediation": "true",
@@ -16,15 +9,25 @@
         "displayMode": "diff",
         "useMendStatusNames": "true"
     },
+    
+    "issueSettings": {
+        "minSeverityLevel": "LOW",
+        "issueType": "DEPENDENCY"
+    },
     "checkRunSettings": {
         "vulnerableCheckRunConclusionLevel": "failure",
         "displayMode": "diff",
         "useMendCheckNames": "true"
     },
-    "issueSettings": {
-        "minSeverityLevel": "LOW",
-        "issueType": "DEPENDENCY"
+
+    "scanSettings": {
+        "configMode": "LOCAL",
+        "enableLicenseViolations": "true",
+        "enableIaC": "true",
+        "projectToken": "",
+        "baseBranches": ["main", "TestingNewBranch"]
     },
+
     "remediateSettings": {
         "workflowRules": {
             "enabled": false
