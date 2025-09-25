@@ -2,36 +2,29 @@
 
 name: UA/CLI Scan Run
 
-# Controls when the workflow will run
-# on:
-#   # Triggers the workflow on push or pull request events but only for the "main" branch
-#   push:
-#     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-#   # Allows you to run this workflow manually from the Actions tab
-#  workflow_dispatch:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
-      # Runs a set of commands using the runners shell
+
       - name: Downloading the Scanners
         run: |
           echo "Downloading the UA"
           curl -LJO "https://github.com/whitesource/unified-agent-distribution/releases/latest/download/wss-unified-agent.jar"
           echo "Downloading the CLI"
-          curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
+          curl -sSL https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
 
       - name: Verifying the Scanners
         run: |
@@ -40,45 +33,47 @@ jobs:
           echo "Verifying the CLI"
           mend version
 
-      - name: 'Running the UA'
+      - name: Running the UA
         run: java -jar wss-unified-agent.jar
         env: 
           WS_LOG_LEVEL: "DEBUG"
-          WS_SHOWPROGRESSBAR: FALSE
-          WS_PROJECTNAME: $Build.Repository.Name_$Build.SourceBranchName
-          WS_PRODUCTNAME: $Build.Repository.Name
-          WS_USERKEY: $WS_USERKEY
-          WS_APIKEY: $WS_APIKEY
-          WS_WSS_URL: $MEND_URL
+          WS_SHOWPROGRESSBAR: "FALSE"
+          WS_PROJECTNAME: "${{ github.event.repository.name }}_${{ github.ref_name }}"
+          WS_PRODUCTNAME: "${{ github.event.repository.name }}"
+          WS_USERKEY: ${{ secrets.WS_USERKEY }}
+          WS_APIKEY: ${{ secrets.WS_APIKEY }}
+          WS_WSS_URL: ${{ secrets.MEND_URL }}
         
-      - name: "Building Nuget"
-        run: |
-              echo "Building nuget"
-              nuget install
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
 
-      - name: "Building Maven"
+      - name: Building Nuget
         run: |
-              echo "Building Maven"
-              mvn clean install
+          echo "Building Nuget"
+          dotnet restore
+
+      - name: Building Maven
+        run: |
+          echo "Building Maven"
+          mvn clean install
            
-      - name: "Building NPM"
+      - name: Building NPM
         run: |
-              echo "Building NPM"
-              npm install
+          echo "Building NPM"
+          npm install
 
-      - name: "Building pip"
+      - name: Building pip
         run: |
-              echo "Building pip"
-              pip install --requirement requirements.txt
+          echo "Building pip"
+          pip install --requirement requirements.txt
 
-      - name: "Running the CLI"
+      - name: Running the CLI
         run: |
-              mend dep --non-interactive --extended --update --scope "Tyler_Github_Scans//${{ github.repository }}"
+          mend dep --non-interactive --extended --update --scope "Tyler_Github_Scans//${{ github.repository }}"
         env:
           MEND_USER_KEY: ${{ secrets.WS_USERKEY }}
           MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
           MEND_URL: ${{ secrets.MEND_URL }}
           MEND_LOG_LEVEL: "DEBUG"
-        
-
-      
