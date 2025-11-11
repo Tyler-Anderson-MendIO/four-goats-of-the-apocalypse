@@ -2,7 +2,7 @@
     "scanSettings": {
         "configMode": "LOCAL",
         "enableLicenseViolations": "true",
-        "baseBranches": []
+        "baseBranches": ["main", "TestingNewBranch", "PutThisOneTho"]
     },
     "pullRequestStatusSettings": {
         "vulnerablePullRequestStatus": "failure",
@@ -20,7 +20,7 @@
     },
     "remediateSettings": {
         "workflowRules": {
-            "enabled": true
+            "enabled": false
         }
     }
 }
