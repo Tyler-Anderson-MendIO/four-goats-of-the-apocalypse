@@ -1,8 +1,7 @@
 {
-    "scanSettings": {
+    "scanSastSettings": {
         "enableScan": "true",
         "enableRemediation": "true",
-        "baseBranches": [],
         "ScanPullRequests": "true"
     },
     "pullRequestStatusSettings": {
@@ -24,9 +23,9 @@
     "scanSettings": {
         "configMode": "LOCAL",
         "enableLicenseViolations": "true",
-        "enableIaC": "true",
+        "enableIaC": "false",
         "projectToken": "00059aa67c7246efbff7fb30474e9b63fbb8ae9ece8a49f88f2ddf382f2df292",
-        "baseBranches": ["main", "TestingNewBranch"]
+        "baseBranches": []
     },
 
     "remediateSettings": {
