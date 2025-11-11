@@ -1,7 +1,8 @@
 {
-    "scanSettingsSAST": {
+    "scanSettings": {
         "enableScan": "true",
         "enableRemediation": "true",
+        "baseBranches": [],
         "ScanPullRequests": "true"
     },
     "pullRequestStatusSettings": {
